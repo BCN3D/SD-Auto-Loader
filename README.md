@@ -1,6 +1,6 @@
 # SD Auto Loader
 All of our 3D printers come with an 8GB SD card with all the documentation needed to get ready and start printing.
-All the info takes about half a gigabyte and a takes about 4 minutes to upload. Too much.
+All the info takes about half a gigabyte and a takes about 4 minutes to upload. Too much time. So we decided to do something about it and try to automate the process a little bit.
 
 ##How it works
 We've taken a Raspberry Pi and plug it a 10 port USB hub. Then we throw in 8 SD Readers and we can start copying files.
@@ -24,8 +24,8 @@ If you want to do some wireless maintenance you'll need to configure the ssh ser
 ##Printed Parts
 You can download all the **STL** files if you want to print our design or make your own.
 The files are: 
-* Bottom Cover.stl
-* Upper Cover.stl
+* SDbottom.stl
+* SDBoxTOP.stl
 
 
 ##Milestones
