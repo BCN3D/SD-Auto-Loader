@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd /dev
+list=`ls sd?`
+x=`echo $list | awk '{print $2}'`
+sudo umount $x*1
+sudo parted -s /dev/$x mkfs 1 FAT32
+sudo mount /dev/$x*1 /media/SD2
+sudo cp -r /home/pi/prova/prova2 /media/SD2
+sudo umount /media/SD2
+
