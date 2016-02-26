@@ -7,5 +7,5 @@ x=`echo $list | awk '{print $5}'`
 sudo umount $x*1
 sudo parted -s /dev/$x mkfs 1 FAT32
 sudo mount /dev/$x*1 /media/SD5
-sudo cp -r /home/pi/BCN3DPlus /media/SD5
+sudo cp -rfv /home/pi/BCN3DPlus/* /media/SD5
 sudo umount /media/SD5

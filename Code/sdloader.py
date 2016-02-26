@@ -10,6 +10,7 @@
 import RPi.GPIO as GPIO
 import time
 import os
+import subprocess as sub
 import sys
 import socket
 
@@ -17,6 +18,7 @@ BCN3DSigmaPath = "/home/pi/BCN3DSigma"
 BCN3DPlusPath = "/home/pi/BCN3DPlus"
 BCN3DSigmaScreenPath = "home/pi/BCN3DSigmaScreen"
 repoPath = "/home/pi/sd-auto-loader"
+codePath = "/home/pi/sd-auto-loader/Code"
 
 #Pin declarations
 LED1 = 21 
@@ -71,14 +73,24 @@ def manageInputs():
 	input_state_19 = GPIO.input(19)
 	input_state_13 = GPIO.input(13)
 	input_state_6 = GPIO.input(6) 
+	GPIO.setmode(GPIO.BCM)
+	GPIO.setup(LED1, GPIO.OUT)
+	GPIO.setup(LED2, GPIO.OUT)
+	GPIO.setup(LED3, GPIO.OUT)
+	GPIO.setup(LED4, GPIO.OUT)
+	GPIO.setup(LED5, GPIO.OUT)
+	GPIO.setup(LED6, GPIO.OUT)
+	GPIO.setup(LED7, GPIO.OUT)
+	GPIO.setup(LED8, GPIO.OUT)
+	GPIO.setup(LED9, GPIO.OUT)
 	
 def turnOnLED(pin):
-	print "turning on led: %d" % pin
+	#print "turning on led: %d" % pin
 	GPIO.output(pin, GPIO.HIGH)
 	time.sleep(0.1)
 	
 def turnOffLED(pin):
-	print "turning off led: %d" % pin
+	#print "turning off led: %d" % pin
 	GPIO.output(pin, GPIO.LOW)
 	time.sleep(0.1)
 	
@@ -93,20 +105,25 @@ def turnOffAllLEDs():
 	GPIO.output(24, GPIO.LOW)
 	GPIO.output(23, GPIO.LOW)
 	
-def startUpLEDS():
+def turnOnAllLEDs():
+	GPIO.output(21, GPIO.HIGH)
+	GPIO.output(20, GPIO.HIGH)
+	GPIO.output(16, GPIO.HIGH)
+	GPIO.output(12, GPIO.HIGH)
+	GPIO.output(7, GPIO.HIGH)
+	GPIO.output(8, GPIO.HIGH)
+	GPIO.output(25, GPIO.HIGH)
+	GPIO.output(24, GPIO.HIGH)
+	GPIO.output(23, GPIO.HIGH)
+	
+def blinkLED(LED):
+	turnOnLED(LED)
+	turnOffLED(LED)
+	
+def startUpLEDS(times):
 	#Just a sequence of LEDs to know that the system is running the program
-	GPIO.setmode(GPIO.BCM)
-	GPIO.setup(LED1, GPIO.OUT)
-	GPIO.setup(LED2, GPIO.OUT)
-	GPIO.setup(LED3, GPIO.OUT)
-	GPIO.setup(LED4, GPIO.OUT)
-	GPIO.setup(LED5, GPIO.OUT)
-	GPIO.setup(LED6, GPIO.OUT)
-	GPIO.setup(LED7, GPIO.OUT)
-	GPIO.setup(LED8, GPIO.OUT)
-	GPIO.setup(LED9, GPIO.OUT)
 	print "Lightning some LEDs..."
-	for x in range(0,3):
+	for x in range(0,times):
 		print ".	.	.	.	."
 		turnOnLED(LED1)
 		turnOnLED(LED2)
@@ -130,99 +147,320 @@ def startUpLEDS():
 		#GPIO.cleanup() 
 		
 def loadBCN3DSigmaSD():
+	os.chdir(codePath)
+	startUpLEDS(1)
 	time.sleep(2)
-	os.system("./sd1FAT32") 
-	GPIO.setup(21, GPIO.OUT)
-	GPIO.output(21, GPIO.HIGH) #Status 1
-	os.system("./sd2FAT32") 
-	GPIO.setup(20, GPIO.OUT) 
-	GPIO.output(20, GPIO.HIGH) #Status 2
-	os.system("./sd3FAT32") 
-	GPIO.setup(16, GPIO.OUT)
-	GPIO.output(16, GPIO.HIGH) #Status 3
-	os.system("./sd4FAT32") 
-	GPIO.setup(12, GPIO.OUT)
-	GPIO.output(12, GPIO.HIGH) #Status 4
-	os.system("./sd5FAT32") 
-	GPIO.setup(7, GPIO.OUT)
-	GPIO.output(7, GPIO.HIGH) #Status 5
-	os.system("./sd6FAT32") 
-	GPIO.setup(8, GPIO.OUT)
-	GPIO.output(8, GPIO.HIGH) #Status 6
-	os.system("./sd7FAT32") 
-	GPIO.setup(25, GPIO.OUT)
-	GPIO.output(25, GPIO.HIGH) #Status 7
-	os.system("./sd8FAT32")
-	GPIO.setup(24, GPIO.OUT)
-	GPIO.output(24, GPIO.HIGH) #Status 8
-	os.system("./sd9FAT32")
-	GPIO.setup(23, GPIO.OUT)
-	GPIO.output(23, GPIO.HIGH) #Status 9 
+	proc = sub.Popen("./sd1FAT32")
+	while (proc.returncode == None):
+		blinkLED(LED1)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED1)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED1)
+	#SD1 END
+	proc = sub.Popen("./sd2FAT32")
+	while (proc.returncode == None):
+		blinkLED(LED2)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED2)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED2)
+	#SD2 END
+	proc = sub.Popen("./sd3FAT32")
+	while (proc.returncode == None):
+		blinkLED(LED3)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED3)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED3)
+	#SD3 END
+	proc = sub.Popen("./sd4FAT32")
+	while (proc.returncode == None):
+		blinkLED(LED4)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED4)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED4)
+	#SD4 END
+	proc = sub.Popen("./sd5FAT32")
+	while (proc.returncode == None):
+		blinkLED(LED5)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED5)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED5)
+	#SD5 END	
+	proc = sub.Popen("./sd6FAT32")
+	while (proc.returncode == None):
+		blinkLED(LED6)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED6)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED6)
+	#SD6 END	
+	proc = sub.Popen("./sd7FAT32")
+	while (proc.returncode == None):
+		blinkLED(LED7)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED7)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED7)
+	#SD7 END	
+	proc = sub.Popen("./sd8FAT32")
+	while (proc.returncode == None):
+		blinkLED(LED8)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED8)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED8)
+	#SD8 END 
+	proc = sub.Popen("./sd9FAT32")
+	while (proc.returncode == None):
+		blinkLED(LED9)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED9)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED9)
+	#SD9 END 
 	time.sleep(5) #Sleep for 5 seconds
 	turnOffAllLEDs()
 
 def loadBCN3DSigmaScreenSD():
+	os.chdir(codePath)
+	startUpLEDS(1)
 	time.sleep(2)
-	os.system("./sd1FAT16")
-	GPIO.setup(21, GPIO.OUT)
-	GPIO.output(21, GPIO.HIGH) #Status 1
-	os.system("./sd2FAT16")
-	GPIO.setup(20, GPIO.OUT)
-	GPIO.output(20, GPIO.HIGH) #Status 2
-	os.system("./sd3FAT16")
-	GPIO.setup(16, GPIO.OUT)
-	GPIO.output(16, GPIO.HIGH) #Status 3
-	os.system("./sd4FAT16")
-	GPIO.setup(12, GPIO.OUT)
-	GPIO.output(12, GPIO.HIGH) #Status 4
-	os.system("./sd5FAT16")
-	GPIO.setup(7, GPIO.OUT)
-	GPIO.output(7, GPIO.HIGH) #Status 5
-	os.system("./sd6FAT16")
-	GPIO.setup(8, GPIO.OUT)
-	GPIO.output(8, GPIO.HIGH) #Status 6
-	os.system("./sd7FAT16")
-	GPIO.setup(25, GPIO.OUT)
-	GPIO.output(25, GPIO.HIGH) #Status 7
-	os.system("./sd8FAT16")
-	GPIO.setup(24, GPIO.OUT)
-	GPIO.output(24, GPIO.HIGH) #Status 8
-	os.system("./sd9FAT16")
-	GPIO.setup(23, GPIO.OUT)
-	GPIO.output(23, GPIO.HIGH) #Status 9
+	proc = sub.Popen("./sd1FAT16")
+	while (proc.returncode == None):
+		blinkLED(LED1)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED1)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED1)
+	#SD1 END
+	proc = sub.Popen("./sd2FAT16")
+	while (proc.returncode == None):
+		blinkLED(LED2)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED2)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED2)
+	#SD2 END
+	proc = sub.Popen("./sd3FAT16")
+	while (proc.returncode == None):
+		blinkLED(LED3)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED3)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED3)
+	#SD3 END
+	proc = sub.Popen("./sd4FAT16")
+	while (proc.returncode == None):
+		blinkLED(LED4)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED4)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED4)
+	#SD4 END
+	proc = sub.Popen("./sd5FAT16")
+	while (proc.returncode == None):
+		blinkLED(LED5)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED5)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED5)
+	#SD5 END	
+	proc = sub.Popen("./sd6FAT16")
+	while (proc.returncode == None):
+		blinkLED(LED6)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED6)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED6)
+	#SD6 END	
+	proc = sub.Popen("./sd7FAT16")
+	while (proc.returncode == None):
+		blinkLED(LED7)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED7)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED7)
+	#SD7 END	
+	proc = sub.Popen("./sd8FAT16")
+	while (proc.returncode == None):
+		blinkLED(LED8)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED8)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED8)
+	#SD8 END 
+	proc = sub.Popen("./sd9FAT16")
+	while (proc.returncode == None):
+		blinkLED(LED9)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED9)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED9)
+	#SD9 END 	
 	time.sleep(5) #Sleep for 5 seconds
 	turnOffAllLEDs()
 
-
 def loadBCN3DPlusSD():
+	os.chdir(codePath)
+	startUpLEDS(1)
 	time.sleep(2)
-	os.system("./sd1Plus") 
-	GPIO.setup(21, GPIO.OUT)
-	GPIO.output(21, GPIO.HIGH) #Status 1
-	os.system("./sd2Plus")
-	GPIO.setup(20, GPIO.OUT)
-	GPIO.output(20, GPIO.HIGH) #Status 2
-	os.system("./sd3Plus")
-	GPIO.setup(16, GPIO.OUT)
-	GPIO.output(16, GPIO.HIGH) #Status 3
-	os.system("./sd4Plus")
-	GPIO.setup(12, GPIO.OUT)
-	GPIO.output(12, GPIO.HIGH) #Status 4
-	os.system("./sd5Plus")
-	GPIO.setup(7, GPIO.OUT)
-	GPIO.output(7, GPIO.HIGH) #Status 5
-	os.system("./sd6Plus")
-	GPIO.setup(8, GPIO.OUT)
-	GPIO.output(8, GPIO.HIGH) #Status 6
-	os.system("./sd7Plus")
-	GPIO.setup(25, GPIO.OUT)
-	GPIO.output(25, GPIO.HIGH) #Status 7
-	os.system("./sd8Plus")
-	GPIO.setup(24, GPIO.OUT)
-	GPIO.output(24, GPIO.HIGH) #Status 8
-	os.system("./sd9Plus")
-	GPIO.setup(23, GPIO.OUT)
-	GPIO.output(23, GPIO.HIGH) #Status 9
+	proc = sub.Popen("./sd1Plus")
+	while (proc.returncode == None):
+		blinkLED(LED1)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED1)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED1)
+	#SD1 END
+	proc = sub.Popen("./sd2Plus")
+	while (proc.returncode == None):
+		blinkLED(LED2)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED2)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED2)
+	#SD2 END
+	proc = sub.Popen("./sd3Plus")
+	while (proc.returncode == None):
+		blinkLED(LED3)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED3)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED3)
+	#SD3 END
+	proc = sub.Popen("./sd4Plus")
+	while (proc.returncode == None):
+		blinkLED(LED4)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED4)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED4)
+	#SD4 END
+	proc = sub.Popen("./sd5Plus")
+	while (proc.returncode == None):
+		blinkLED(LED5)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED5)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED5)
+	#SD5 END	
+	proc = sub.Popen("./sd6Plus")
+	while (proc.returncode == None):
+		blinkLED(LED6)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED6)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED6)
+	#SD6 END	
+	proc = sub.Popen("./sd7Plus")
+	while (proc.returncode == None):
+		blinkLED(LED7)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED7)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED7)
+	#SD7 END	
+	proc = sub.Popen("./sd8Plus")
+	while (proc.returncode == None):
+		blinkLED(LED8)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED8)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED8)
+	#SD8 END 
+	proc = sub.Popen("./sd9Plus")
+	while (proc.returncode == None):
+		blinkLED(LED9)
+		proc.poll()
+	if (proc.returncode != 0):
+		print "An error ocurred loading SD1"
+		turnOffLED(LED9)
+	else:
+		print "SD1 Loaded Successfully!"		
+		turnOnLED(LED9)
+	#SD9 END 	
 	time.sleep(5) #Sleep for 5 seconds
 	turnOffAllLEDs()
 	
@@ -254,6 +492,10 @@ def checkButtons(channel):
 			print 'Loading BCN3D+ SD' 
 			loadBCN3DSigmaSD()
 			time.sleep(2)
+		if input_state_26 == False and input_state_19 == False and input_state_13 == False and input_state_6 == False:
+			print "Powering OFF The system"
+			GPIO.cleanup()
+			os.system("sudo poweroff")
 		#if input_state_26 == True and input_state_19 == True and input_state_13 == True and input_state_6 == False:
 			
 		
@@ -272,13 +514,13 @@ def checkButtons(channel):
 def main():
 	syncGithub()
 	manageInputs()
-	startUpLEDS()
+	startUpLEDS(3)
 	#Callback function in PIN 5. Whenever a Falling Edge is detected, run checkButtons function
 	GPIO.add_event_detect(5, GPIO.FALLING, callback=checkButtons, bouncetime=300)
 
 	while True:
 		time.sleep(1)
-		print "waiting for the load button..."		
+		#print "waiting for the load button..."		
 
 #Just the regular boilerplate to start the program
 if __name__ == '__main__':
