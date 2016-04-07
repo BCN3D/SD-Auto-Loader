@@ -13,6 +13,7 @@ import os
 import subprocess as sub
 import sys
 import socket
+from clint.textui import colored
 
 BCN3DSigmaPath = "/home/pi/BCN3DSigma"
 BCN3DPlusPath = "/home/pi/BCN3DPlus"
@@ -44,7 +45,7 @@ def haveInternet():
 def syncGithub():
 	#Update the Repo
 	if haveInternet():
-		print "Internet is ON!"
+		print (colored.green("=========Internet is ON!==========="))
 		try:
 			print "Getting updates from Github"
 			os.chdir(repoPath)
@@ -55,7 +56,7 @@ def syncGithub():
 			print "Something went wrong, check your internet connection"
 			pass
 	else:
-		print "No internet, no github sync" 
+		print (colored.red("=============No internet, no github sync=============")) 
 		
 def manageInputs():
 	print "Setting the switches to inputs"
@@ -118,6 +119,7 @@ def turnOnAllLEDs():
 	
 def blinkLED(LED):
 	turnOnLED(LED)
+	time.sleep(0.25)
 	turnOffLED(LED)
 	
 def startUpLEDS(times):
@@ -150,319 +152,68 @@ def loadBCN3DSigmaSD():
 	os.chdir(codePath)
 	startUpLEDS(1)
 	time.sleep(2)
-	proc = sub.Popen("./sd1FAT32")
+	proc = sub.Popen(['./formatAndCopy.sh', 'Sigma'])
 	while (proc.returncode == None):
-		blinkLED(LED1)
+		turnOnAllLEDs()
+		time.sleep(0.5)
+		turnOffAllLEDs()
 		proc.poll()
 	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED1)
+		print (colored.red("*************An error ocurred loading SD's***********"))
+		turnOffAllLEDs()
 	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED1)
-	#SD1 END
-	proc = sub.Popen("./sd2FAT32")
-	while (proc.returncode == None):
-		blinkLED(LED2)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED2)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED2)
-	#SD2 END
-	proc = sub.Popen("./sd3FAT32")
-	while (proc.returncode == None):
-		blinkLED(LED3)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED3)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED3)
-	#SD3 END
-	proc = sub.Popen("./sd4FAT32")
-	while (proc.returncode == None):
-		blinkLED(LED4)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED4)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED4)
-	#SD4 END
-	proc = sub.Popen("./sd5FAT32")
-	while (proc.returncode == None):
-		blinkLED(LED5)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED5)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED5)
-	#SD5 END	
-	proc = sub.Popen("./sd6FAT32")
-	while (proc.returncode == None):
-		blinkLED(LED6)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED6)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED6)
-	#SD6 END	
-	proc = sub.Popen("./sd7FAT32")
-	while (proc.returncode == None):
-		blinkLED(LED7)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED7)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED7)
-	#SD7 END	
-	proc = sub.Popen("./sd8FAT32")
-	while (proc.returncode == None):
-		blinkLED(LED8)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED8)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED8)
-	#SD8 END 
-	proc = sub.Popen("./sd9FAT32")
-	while (proc.returncode == None):
-		blinkLED(LED9)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED9)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED9)
-	#SD9 END 
-	time.sleep(5) #Sleep for 5 seconds
-	turnOffAllLEDs()
+		print (colored.green("----------------SD's Loaded Successfully!-----------------"))		
+		turnOnAllLEDs()
+	time.sleep(2) #Sleep for 2 seconds
+	for x in range(0,5):
+		turnOnAllLEDs();
+		time.sleep(0.25);
+		turnOffAllLEDs();
+		
 
 def loadBCN3DSigmaScreenSD():
 	os.chdir(codePath)
 	startUpLEDS(1)
 	time.sleep(2)
-	proc = sub.Popen("./sd1FAT16")
+	proc = sub.Popen(['./formatAndCopy.sh', 'LCD'])
 	while (proc.returncode == None):
-		blinkLED(LED1)
+		turnOnAllLEDs()
+		time.sleep(0.5)
+		turnOffAllLEDs()
 		proc.poll()
 	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED1)
+		print (colored.red("*************An error ocurred loading SD's***********"))
+		turnOffAllLEDs()
 	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED1)
-	#SD1 END
-	proc = sub.Popen("./sd2FAT16")
-	while (proc.returncode == None):
-		blinkLED(LED2)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED2)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED2)
-	#SD2 END
-	proc = sub.Popen("./sd3FAT16")
-	while (proc.returncode == None):
-		blinkLED(LED3)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED3)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED3)
-	#SD3 END
-	proc = sub.Popen("./sd4FAT16")
-	while (proc.returncode == None):
-		blinkLED(LED4)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED4)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED4)
-	#SD4 END
-	proc = sub.Popen("./sd5FAT16")
-	while (proc.returncode == None):
-		blinkLED(LED5)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED5)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED5)
-	#SD5 END	
-	proc = sub.Popen("./sd6FAT16")
-	while (proc.returncode == None):
-		blinkLED(LED6)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED6)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED6)
-	#SD6 END	
-	proc = sub.Popen("./sd7FAT16")
-	while (proc.returncode == None):
-		blinkLED(LED7)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED7)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED7)
-	#SD7 END	
-	proc = sub.Popen("./sd8FAT16")
-	while (proc.returncode == None):
-		blinkLED(LED8)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED8)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED8)
-	#SD8 END 
-	proc = sub.Popen("./sd9FAT16")
-	while (proc.returncode == None):
-		blinkLED(LED9)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED9)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED9)
-	#SD9 END 	
-	time.sleep(5) #Sleep for 5 seconds
-	turnOffAllLEDs()
+		print (colored.green("----------------SD's Loaded Successfully!-----------------"))		
+		turnOnAllLEDs()
+	time.sleep(2) #Sleep for 2 seconds
+	for x in range(0,5):
+		turnOnAllLEDs();
+		time.sleep(0.25);
+		turnOffAllLEDs();
 
 def loadBCN3DPlusSD():
 	os.chdir(codePath)
 	startUpLEDS(1)
 	time.sleep(2)
-	proc = sub.Popen("./sd1Plus")
+	proc = sub.Popen(['./formatAndCopy.sh', 'Plus'])
 	while (proc.returncode == None):
-		blinkLED(LED1)
+		turnOnAllLEDs()
+		time.sleep(0.5)
+		turnOffAllLEDs()
 		proc.poll()
 	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED1)
+		print (colored.red("*************An error ocurred loading SD's***********"))
+		turnOffAllLEDs()
 	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED1)
-	#SD1 END
-	proc = sub.Popen("./sd2Plus")
-	while (proc.returncode == None):
-		blinkLED(LED2)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED2)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED2)
-	#SD2 END
-	proc = sub.Popen("./sd3Plus")
-	while (proc.returncode == None):
-		blinkLED(LED3)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED3)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED3)
-	#SD3 END
-	proc = sub.Popen("./sd4Plus")
-	while (proc.returncode == None):
-		blinkLED(LED4)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED4)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED4)
-	#SD4 END
-	proc = sub.Popen("./sd5Plus")
-	while (proc.returncode == None):
-		blinkLED(LED5)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED5)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED5)
-	#SD5 END	
-	proc = sub.Popen("./sd6Plus")
-	while (proc.returncode == None):
-		blinkLED(LED6)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED6)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED6)
-	#SD6 END	
-	proc = sub.Popen("./sd7Plus")
-	while (proc.returncode == None):
-		blinkLED(LED7)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED7)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED7)
-	#SD7 END	
-	proc = sub.Popen("./sd8Plus")
-	while (proc.returncode == None):
-		blinkLED(LED8)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED8)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED8)
-	#SD8 END 
-	proc = sub.Popen("./sd9Plus")
-	while (proc.returncode == None):
-		blinkLED(LED9)
-		proc.poll()
-	if (proc.returncode != 0):
-		print "An error ocurred loading SD1"
-		turnOffLED(LED9)
-	else:
-		print "SD1 Loaded Successfully!"		
-		turnOnLED(LED9)
-	#SD9 END 	
-	time.sleep(5) #Sleep for 5 seconds
-	turnOffAllLEDs()
+		print (colored.green("----------------SD's Loaded Successfully!-----------------"))		
+		turnOnAllLEDs()
+	time.sleep(2) #Sleep for 2 seconds
+	for x in range(0,5):
+		turnOnAllLEDs();
+		time.sleep(0.25);
+		turnOffAllLEDs();
 	
 def printButtonStatus():
 	print "Switch 1 is set to: %d" % GPIO.input(6)
@@ -493,6 +244,11 @@ def checkButtons(channel):
 			loadBCN3DSigmaSD()
 			time.sleep(2)
 		if input_state_26 == False and input_state_19 == False and input_state_13 == False and input_state_6 == False:
+			turnOffAllLEDs()
+			for x in range(0,5):
+				turnOnAllLEDs();
+				time.sleep(0.25);
+				turnOffAllLEDs();
 			print "Powering OFF The system"
 			GPIO.cleanup()
 			os.system("sudo poweroff")
@@ -519,7 +275,7 @@ def main():
 	GPIO.add_event_detect(5, GPIO.FALLING, callback=checkButtons, bouncetime=300)
 
 	while True:
-		time.sleep(1)
+		time.sleep(0.5)
 		#print "waiting for the load button..."		
 
 #Just the regular boilerplate to start the program
