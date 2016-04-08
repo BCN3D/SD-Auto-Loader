@@ -33,6 +33,7 @@ LED8 = 24
 LED9 = 23
 
 def haveInternet():
+	os.system("sudo ifup eth0")
 	REMOTE_SERVER = "www.google.com"
 	try:
 		host = socket.gethostbyname(REMOTE_SERVER)
@@ -166,9 +167,9 @@ def loadBCN3DSigmaSD():
 		turnOnAllLEDs()
 	time.sleep(2) #Sleep for 2 seconds
 	for x in range(0,5):
-		turnOnAllLEDs();
-		time.sleep(0.25);
-		turnOffAllLEDs();
+		turnOnAllLEDs()
+		time.sleep(0.25)
+		turnOffAllLEDs()
 		
 
 def loadBCN3DSigmaScreenSD():
@@ -189,9 +190,9 @@ def loadBCN3DSigmaScreenSD():
 		turnOnAllLEDs()
 	time.sleep(2) #Sleep for 2 seconds
 	for x in range(0,5):
-		turnOnAllLEDs();
-		time.sleep(0.25);
-		turnOffAllLEDs();
+		turnOnAllLEDs()
+		time.sleep(0.25)
+		turnOffAllLEDs()
 
 def loadBCN3DPlusSD():
 	os.chdir(codePath)
@@ -211,9 +212,31 @@ def loadBCN3DPlusSD():
 		turnOnAllLEDs()
 	time.sleep(2) #Sleep for 2 seconds
 	for x in range(0,5):
-		turnOnAllLEDs();
-		time.sleep(0.25);
-		turnOffAllLEDs();
+		turnOnAllLEDs()
+		time.sleep(0.25)
+		turnOffAllLEDs()
+		
+def loadBCN3DRSD():
+	os.chdir(codePath)
+	startUpLEDS(1)
+	time.sleep(2)
+	proc = sub.Popen(['./formatAndCopy.sh', 'R'])
+	while (proc.returncode == None):
+		turnOnAllLEDs()
+		time.sleep(0.5)
+		turnOffAllLEDs()
+		proc.poll()
+	if (proc.returncode != 0):
+		print (colored.red("*************An error ocurred loading SD's***********"))
+		turnOffAllLEDs()
+	else:
+		print (colored.green("----------------SD's Loaded Successfully!-----------------"))		
+		turnOnAllLEDs()
+	time.sleep(2) #Sleep for 2 seconds
+	for x in range(0,5):
+		turnOnAllLEDs()
+		time.sleep(0.25)
+		turnOffAllLEDs()
 	
 def printButtonStatus():
 	print "Switch 1 is set to: %d" % GPIO.input(6)
@@ -242,6 +265,10 @@ def checkButtons(channel):
 		if input_state_26 == True and input_state_19 == True and input_state_13 == False and input_state_6 == True:
 			print 'Loading BCN3D+ SD' 
 			loadBCN3DSigmaSD()
+			time.sleep(2)
+		if input_state_26 == True and input_state_19 == True and input_state_13 == True and input_state_6 == False:
+			print 'Loading BCN3DR SD'
+			loadBCN3DRSD()
 			time.sleep(2)
 		if input_state_26 == False and input_state_19 == False and input_state_13 == False and input_state_6 == False:
 			turnOffAllLEDs()
