@@ -69,16 +69,24 @@ elif [ "$machine" = "LCD" ]; then
 		sd2=${sd:0:3}
 		echo "$sd"
 		sudo umount /dev/$sd2 > /dev/null
-		sudo parted -s /dev/$sd2 rm 1 > /dev/null
-		sudo parted -s /dev/$sd2 rm 2 > /dev/null
-		sudo parted -s /dev/$sd2 mkpart primary 1s 2048MB
+		sudo fdisk /dev/$sd2 <<-EOF
+		d
+		n
+		p
+		
+		
+		
+		t
+		6
+		w
+		EOF
 		sudo mkfs.vfat -F 16 /dev/$sd -n LCD
 		sudo mount /dev/$sd /mnt/sd
 		sudo cp -rfv /home/pi/BCN3DSigmaLCD/* /mnt/sd/
 		sudo umount /mnt/sd > /dev/null
 	done
 elif [ "$machine" = "R" ]; then
-	echo "Sigma LCD"
+	echo "BCN3DR"
 	for sd in "${sdlist[@]}";
 	do
 		sudo rm -rf /mnt/sd/*
