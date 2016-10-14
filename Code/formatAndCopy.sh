@@ -70,21 +70,6 @@ elif [ "$machine" = "LCD" ]; then
 		sd2=${sd:0:3}
 		echo "$sd"
 		sudo umount /dev/$sd2 > /dev/null
-<<<<<<< HEAD
-		sudo fdisk /dev/$sd2 <<-EOF
-		d
-		n
-		p
-		
-		
-		
-		t
-		6
-		w
-		EOF
-		sudo mkfs.vfat -F 16 /dev/$sd -n LCD
-		sudo mount /dev/$sd /mnt/sd
-=======
 		#sudo parted -s /dev/$sd2 rm 1 > /dev/null
 		#sudo parted -s /dev/$sd2 rm 2 > /dev/null
 		#Making a label deletes all the structure
@@ -92,7 +77,6 @@ elif [ "$machine" = "LCD" ]; then
 		#Better to don't put a name on the format
 		sudo mkfs.vfat -I -F 16 /dev/$sd2
 		sudo mount /dev/$sd2 /mnt/sd
->>>>>>> 27da1eefad06ffadf7bb818ff63e8ea2008994fc
 		sudo cp -rfv /home/pi/BCN3DSigmaLCD/* /mnt/sd/
 		sudo umount /mnt/sd > /dev/null
 	done
