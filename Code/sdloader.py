@@ -4,7 +4,7 @@
 
 #This Program lets you to copy the files you want to multiple SD Cards
 #It has 4 rocker switches to select the folders and documents to upload and
-#a load button to start the sequence. First it checks if there is internet 
+#a load button to start the sequence. First it checks if there is internet
 #to pull updates from Github and be updated all time.
 
 import RPi.GPIO as GPIO
@@ -22,7 +22,7 @@ repoPath = "/home/pi/sd-auto-loader"
 codePath = "/home/pi/sd-auto-loader/Code"
 
 #Pin declarations
-LED1 = 21 
+LED1 = 21
 LED2 = 20
 LED3 = 16
 LED4 = 12
@@ -41,8 +41,8 @@ def haveInternet():
 		return True
 	except:
 		pass
-	return False 
-	
+	return False
+
 def syncGithub():
 	#Update the Repo
 	if haveInternet():
@@ -57,8 +57,8 @@ def syncGithub():
 			print "Something went wrong, check your internet connection"
 			pass
 	else:
-		print (colored.red("=============No internet, no github sync=============")) 
-		
+		print (colored.red("=============No internet, no github sync============="))
+
 def manageInputs():
 	print "Setting the switches to inputs"
 	GPIO.setwarnings(False)
@@ -69,12 +69,12 @@ def manageInputs():
 	GPIO.setup(19, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 	GPIO.setup(13, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 	GPIO.setup(6, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-	#Read inputs just one time 
+	#Read inputs just one time
 	input_state_5 = GPIO.input(5)
 	input_state_26 = GPIO.input(26)
 	input_state_19 = GPIO.input(19)
 	input_state_13 = GPIO.input(13)
-	input_state_6 = GPIO.input(6) 
+	input_state_6 = GPIO.input(6)
 	GPIO.setmode(GPIO.BCM)
 	GPIO.setup(LED1, GPIO.OUT)
 	GPIO.setup(LED2, GPIO.OUT)
@@ -85,17 +85,17 @@ def manageInputs():
 	GPIO.setup(LED7, GPIO.OUT)
 	GPIO.setup(LED8, GPIO.OUT)
 	GPIO.setup(LED9, GPIO.OUT)
-	
+
 def turnOnLED(pin):
 	#print "turning on led: %d" % pin
 	GPIO.output(pin, GPIO.HIGH)
 	time.sleep(0.1)
-	
+
 def turnOffLED(pin):
 	#print "turning off led: %d" % pin
 	GPIO.output(pin, GPIO.LOW)
 	time.sleep(0.1)
-	
+
 def turnOffAllLEDs():
 	GPIO.output(21, GPIO.LOW)
 	GPIO.output(20, GPIO.LOW)
@@ -106,7 +106,7 @@ def turnOffAllLEDs():
 	GPIO.output(25, GPIO.LOW)
 	GPIO.output(24, GPIO.LOW)
 	GPIO.output(23, GPIO.LOW)
-	
+
 def turnOnAllLEDs():
 	GPIO.output(21, GPIO.HIGH)
 	GPIO.output(20, GPIO.HIGH)
@@ -117,12 +117,12 @@ def turnOnAllLEDs():
 	GPIO.output(25, GPIO.HIGH)
 	GPIO.output(24, GPIO.HIGH)
 	GPIO.output(23, GPIO.HIGH)
-	
+
 def blinkLED(LED):
 	turnOnLED(LED)
 	time.sleep(0.25)
 	turnOffLED(LED)
-	
+
 def startUpLEDS(times):
 	#Just a sequence of LEDs to know that the system is running the program
 	print "Lightning some LEDs..."
@@ -130,12 +130,12 @@ def startUpLEDS(times):
 		print ".	.	.	.	."
 		turnOnLED(LED1)
 		turnOnLED(LED2)
-		turnOnLED(LED3)       
-		turnOnLED(LED4)     
-		turnOnLED(LED5)       
-		turnOnLED(LED6)       
-		turnOnLED(LED7)       
-		turnOnLED(LED8)       
+		turnOnLED(LED3)
+		turnOnLED(LED4)
+		turnOnLED(LED5)
+		turnOnLED(LED6)
+		turnOnLED(LED7)
+		turnOnLED(LED8)
 		turnOnLED(LED9)
 		time.sleep(0.2)
 		turnOffLED(LED9)
@@ -147,8 +147,8 @@ def startUpLEDS(times):
 		turnOffLED(LED3)
 		turnOffLED(LED2)
 		turnOffLED(LED1)
-		#GPIO.cleanup() 
-		
+		#GPIO.cleanup()
+
 def loadBCN3DSigmaSD():
 	os.chdir(codePath)
 	startUpLEDS(1)
@@ -163,14 +163,14 @@ def loadBCN3DSigmaSD():
 		print (colored.red("*************An error ocurred loading SD's***********"))
 		turnOffAllLEDs()
 	else:
-		print (colored.green("----------------SD's Loaded Successfully!-----------------"))		
+		print (colored.green("----------------SD's Loaded Successfully!-----------------"))
 		turnOnAllLEDs()
 	time.sleep(2) #Sleep for 2 seconds
 	for x in range(0,5):
 		turnOnAllLEDs()
 		time.sleep(0.25)
 		turnOffAllLEDs()
-		
+
 
 def loadBCN3DSigmaScreenSD():
 	os.chdir(codePath)
@@ -186,7 +186,7 @@ def loadBCN3DSigmaScreenSD():
 		print (colored.red("*************An error ocurred loading SD's***********"))
 		turnOffAllLEDs()
 	else:
-		print (colored.green("----------------SD's Loaded Successfully!-----------------"))		
+		print (colored.green("----------------SD's Loaded Successfully!-----------------"))
 		turnOnAllLEDs()
 	time.sleep(2) #Sleep for 2 seconds
 	for x in range(0,5):
@@ -208,14 +208,14 @@ def loadBCN3DPlusSD():
 		print (colored.red("*************An error ocurred loading SD's***********"))
 		turnOffAllLEDs()
 	else:
-		print (colored.green("----------------SD's Loaded Successfully!-----------------"))		
+		print (colored.green("----------------SD's Loaded Successfully!-----------------"))
 		turnOnAllLEDs()
 	time.sleep(2) #Sleep for 2 seconds
 	for x in range(0,5):
 		turnOnAllLEDs()
 		time.sleep(0.25)
 		turnOffAllLEDs()
-		
+
 def loadBCN3DRSD():
 	os.chdir(codePath)
 	startUpLEDS(1)
@@ -230,14 +230,14 @@ def loadBCN3DRSD():
 		print (colored.red("*************An error ocurred loading SD's***********"))
 		turnOffAllLEDs()
 	else:
-		print (colored.green("----------------SD's Loaded Successfully!-----------------"))		
+		print (colored.green("----------------SD's Loaded Successfully!-----------------"))
 		turnOnAllLEDs()
 	time.sleep(2) #Sleep for 2 seconds
 	for x in range(0,5):
 		turnOnAllLEDs()
 		time.sleep(0.25)
 		turnOffAllLEDs()
-	
+
 def printButtonStatus():
 	print "Switch 1 is set to: %d" % GPIO.input(6)
 	print "Switch 2 is set to: %d" % GPIO.input(13)
@@ -253,18 +253,23 @@ def checkButtons(channel):
 		input_state_13 = GPIO.input(13)
 		input_state_6 = GPIO.input(6)
 		printButtonStatus()
-		
+
 		if input_state_26 == False and input_state_19 == True and input_state_13 == True and input_state_6 == True:
 			print 'Loading BCN3D Sigma SD'
-			loadBCN3DSigmaSD()				 
+			loadBCN3DSigmaSD()
 			time.sleep(2)
 		if input_state_26 == True and input_state_19 == False and input_state_13 == True and input_state_6 == True:
-			print 'Loading BCN3D Sigma Display uSD' 
-			loadBCN3DSigmaScreenSD()     
+			print 'Loading BCN3D Sigma Display uSD'
+			loadBCN3DSigmaScreenSD()
 			time.sleep(2)
 		if input_state_26 == True and input_state_19 == True and input_state_13 == False and input_state_6 == True:
+<<<<<<< HEAD
 			print 'Loading BCN3D+ SD' 
 			loadBCN3DPlusSD()
+=======
+			print 'Loading BCN3D+ SD'
+			loadBCN3DSigmaSD()
+>>>>>>> 27da1eefad06ffadf7bb818ff63e8ea2008994fc
 			time.sleep(2)
 		if input_state_26 == True and input_state_19 == True and input_state_13 == True and input_state_6 == False:
 			print 'Loading BCN3DR SD'
@@ -280,8 +285,8 @@ def checkButtons(channel):
 			GPIO.cleanup()
 			os.system("sudo poweroff")
 		#if input_state_26 == True and input_state_19 == True and input_state_13 == True and input_state_6 == False:
-			
-		
+
+
 	except KeyboardInterrupt:
 		#If we press ctrl + c
 		print "Program closed by user"
@@ -290,20 +295,24 @@ def checkButtons(channel):
 	except:
 		print "Other error or exception ocurred!"
 		GPIO.cleanup()
-		sys.exit() 
-		
-		
+		sys.exit()
+
+
 #Main program
 def main():
-	syncGithub()
-	manageInputs()
-	startUpLEDS(3)
-	#Callback function in PIN 5. Whenever a Falling Edge is detected, run checkButtons function
-	GPIO.add_event_detect(5, GPIO.FALLING, callback=checkButtons, bouncetime=300)
-
-	while True:
-		time.sleep(0.5)
-		#print "waiting for the load button..."		
+	if sys.argv > 1 and sys.argv[1] == "sync":
+			syncGithub()
+			#Only sync then quit
+			sys.exit()
+	else:
+		syncGithub()
+		manageInputs()
+		startUpLEDS(3)
+		#Callback function in PIN 5. Whenever a Falling Edge is detected, run checkButtons function
+		GPIO.add_event_detect(5, GPIO.FALLING, callback=checkButtons, bouncetime=150)
+		while True:
+			time.sleep(0.5)
+			#print "waiting for the load button..."
 
 #Just the regular boilerplate to start the program
 if __name__ == '__main__':
