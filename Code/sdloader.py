@@ -264,7 +264,7 @@ def checkButtons(channel):
 			time.sleep(2)
 		if input_state_26 == True and input_state_19 == True and input_state_13 == False and input_state_6 == True:
 			print 'Loading BCN3D+ SD' 
-			loadBCN3DSigmaSD()
+			loadBCN3DPlusSD()
 			time.sleep(2)
 		if input_state_26 == True and input_state_19 == True and input_state_13 == True and input_state_6 == False:
 			print 'Loading BCN3DR SD'
