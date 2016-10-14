@@ -313,14 +313,14 @@ def printHelp():
 
 #------------------------------------MAIN FLOW-----------------------------
 def main():
-	if sys.argv == 1 and sys.argv[1] == inputOptions[0]:
+	if len(sys.argv) == 1 and sys.argv[1] == inputOptions[0]:
 			syncGithub()
 			#Only sync then quit
 			sys.exit()
-	elif sys.argv == 1 and sys.argv[1] == inputOptions[1]:
+	elif len(sys.argv) == 1 and sys.argv[1] == inputOptions[1]:
 		printHelp()
 		#When a keyboard is detected, exit program
-	elif sys.argv > 0 and sys.argv[1] not in inputOptions:
+	elif len(sys.argv) > 0 and sys.argv[1] not in inputOptions:
 		#When input arguments are wrong
 		print "command/s " + str(sys.argv[1:]) + " not recognised. Please type " + sys.argv[0] + " \"help\" to see commands"
 		time.sleep(3)
