@@ -21,6 +21,9 @@ BCN3DSigmaScreenPath = "home/pi/BCN3DSigmaScreen"
 repoPath = "/home/pi/sd-auto-loader"
 codePath = "/home/pi/sd-auto-loader/Code"
 
+#Tuple that holds all the input options of the software
+inputOptions = ['sync','help']
+
 #Pin declarations
 LED1 = 21
 LED2 = 20
@@ -280,8 +283,6 @@ def checkButtons(channel):
 			GPIO.cleanup()
 			os.system("sudo poweroff")
 		#if input_state_26 == True and input_state_19 == True and input_state_13 == True and input_state_6 == False:
-
-
 	except KeyboardInterrupt:
 		#If we press ctrl + c
 		print "Program closed by user"
@@ -293,13 +294,33 @@ def checkButtons(channel):
 		sys.exit()
 
 
-#Main program
+def printHelp():
+	#function that prints the options available as input commands
+	try:
+		print "This are the available options: "
+		print '\n'
+		i = 0
+		for option in inputOptions:
+			print "#%d option" % i
+
+		print '\n'
+		print "Use: sudo python sdloader.py [OPTION]"
+	except KeyboardInterrupt:
+		#If we press ctrl + c
+		print "Program closed by user"
+		GPIO.cleanup()
+		sys.exit()
+
+#------------------------------------MAIN FLOW-----------------------------
 def main():
-	if sys.argv > 1 and sys.argv[1] == "sync":
+	if sys.argv == 1 and sys.argv[1] == "sync":
 			syncGithub()
 			#Only sync then quit
 			sys.exit()
-	else:
+	elif sys.argv == 1 and sys.argv[1] == "help":
+		printHelp()
+		#When a keyboard is detected, exit program
+	elif sys.argv == 0:
 		syncGithub()
 		manageInputs()
 		startUpLEDS(3)
@@ -308,6 +329,10 @@ def main():
 		while True:
 			time.sleep(0.5)
 			#print "waiting for the load button..."
+	else:
+		#When input arguments are wrong
+		print "command/s " + sys.argv[1:] + " not recognised. Please type " + sys.argv[0] + " \"help\" to see commands"
+		time.sleep(2)
 
 #Just the regular boilerplate to start the program
 if __name__ == '__main__':
