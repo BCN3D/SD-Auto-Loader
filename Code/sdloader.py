@@ -301,7 +301,8 @@ def printHelp():
 		print '\n'
 		i = 0
 		for option in inputOptions:
-			print "#%d option" % i
+			print "      %d.   %s" % (i,option)
+			i+=1
 
 		print '\n'
 		print "Use: sudo python sdloader.py [OPTION]"
