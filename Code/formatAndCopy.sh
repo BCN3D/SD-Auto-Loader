@@ -11,11 +11,11 @@
 #echo "$#"
 if [[ $# -eq 1 ]]; then
 	machine="$1"
-else 
+else
 	echo "Bad argument number, please verify"
 fi
 
-#echo "$machine" 
+#echo "$machine"
 
 cd /dev
 sdlist=( $(ls sd[a-w][0-1] | tr " " "\n") )
@@ -24,11 +24,11 @@ numberOfSD=${#sdlist[@]}
 echo "$numberOfSD"
 if [ $numberOfSD -eq 0 ]; then
 	echo -e "\e[1m\e[91m==============SD's not detected, please insert and retry============"
-	sleep 5
+	sleep 2
 	clear
 	exit 1
 fi
- 
+
 if [ "$machine" = "Sigma" ]; then
 	echo "BCN3D Sigma"
 	for sd in "${sdlist[@]}";
@@ -65,15 +65,18 @@ elif [ "$machine" = "LCD" ]; then
 	echo "Sigma LCD"
 	for sd in "${sdlist[@]}";
 	do
+		#The micro SD from the LCD is a bit different. It has no partitions!
 		sudo rm -rf /mnt/sd/*
 		sd2=${sd:0:3}
 		echo "$sd"
 		sudo umount /dev/$sd2 > /dev/null
-		sudo parted -s /dev/$sd2 rm 1 > /dev/null
-		sudo parted -s /dev/$sd2 rm 2 > /dev/null
-		sudo parted -s /dev/$sd2 mkpart primary 1s 2048MB
-		sudo mkfs.vfat -F 16 /dev/$sd -n LCD
-		sudo mount /dev/$sd /mnt/sd
+		#sudo parted -s /dev/$sd2 rm 1 > /dev/null
+		#sudo parted -s /dev/$sd2 rm 2 > /dev/null
+		#Making a label deletes all the structure
+		sudo parted -s /dev/$sd2 mklabel msdos
+		#Better to don't put a name on the format
+		sudo mkfs.vfat -I -F 16 /dev/$sd2
+		sudo mount /dev/$sd2 /mnt/sd
 		sudo cp -rfv /home/pi/BCN3DSigmaLCD/* /mnt/sd/
 		sudo umount /mnt/sd > /dev/null
 	done
@@ -94,4 +97,3 @@ elif [ "$machine" = "R" ]; then
 		sudo umount /mnt/sd > /dev/null
 	done
 fi
-

@@ -297,12 +297,14 @@ def checkButtons(channel):
 def main():
 	if sys.argv > 1 and sys.argv[1] == "sync":
 			syncGithub()
+			#Only sync then quit
+			sys.exit()
 	else:
 		syncGithub()
 		manageInputs()
 		startUpLEDS(3)
 		#Callback function in PIN 5. Whenever a Falling Edge is detected, run checkButtons function
-		GPIO.add_event_detect(5, GPIO.FALLING, callback=checkButtons, bouncetime=300)
+		GPIO.add_event_detect(5, GPIO.FALLING, callback=checkButtons, bouncetime=150)
 		while True:
 			time.sleep(0.5)
 			#print "waiting for the load button..."
