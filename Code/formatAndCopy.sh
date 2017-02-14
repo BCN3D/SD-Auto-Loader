@@ -65,16 +65,17 @@ elif [ "$machine" = "LCD" ]; then
 	echo "Sigma LCD"
 	for sd in "${sdlist[@]}";
 	do
-		#The micro SD from the LCD is a bit different. It has no partitions!
+		#The micro SD from the LCD is a bit different. format is FAT and it needs a 
+		#partition of less than 4Gb
 		sudo rm -rf /mnt/sd/*
 		sd2=${sd:0:3}
 		echo "$sd"
 		sudo umount /dev/$sd2 > /dev/null
-		#sudo parted -s /dev/$sd2 rm 1 > /dev/null
-		#sudo parted -s /dev/$sd2 rm 2 > /dev/null
-		#Making a label deletes all the structure
-		sudo parted -s /dev/$sd2 mklabel msdos
+		sudo parted -s /dev/$sd2 rm 1 > /dev/null
+		sudo parted -s /dev/$sd2 rm 2 > /dev/null
 		#Better to don't put a name on the format
+		sudo parted -s /dev/$sd2 mkpart primary fat16 1s 500Mb
+		sudo parted -s /dev/$sd2 align minimal 1
 		sudo mkfs.vfat -I -F 16 /dev/$sd2
 		sudo mount /dev/$sd2 /mnt/sd
 		sudo cp -rfv /home/pi/BCN3DSigmaLCD/* /mnt/sd/
