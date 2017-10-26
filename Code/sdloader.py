@@ -7,7 +7,7 @@
 #a load button to start the sequence. First it checks if there is internet
 #to pull updates from Github and be updated all time.
 
-#Last update 26-10-17 by A.Garcia
+#Last update 27-10-17 by A.Garcia
 
 import RPi.GPIO as GPIO
 import time

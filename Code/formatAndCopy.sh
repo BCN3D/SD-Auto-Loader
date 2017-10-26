@@ -6,7 +6,7 @@
 
 #BCN3D Technologies - April 2016
 #Marc Cobler - Ostap Petrushchak
-#Last update 26-10-17 by A.Garcia
+#Last update 27-10-17 by A.Garcia
 
 #Get the arguments of the command
 #echo "$#"
