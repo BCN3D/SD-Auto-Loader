@@ -77,8 +77,8 @@ elif [ "$machine" = "LCD_Sigma" ]; then
 		#Better to don't put a name on the format
 		sudo parted -s /dev/$sd2 mkpart primary fat16 1s 500Mb
 		sudo parted -s /dev/$sd2 align minimal 1
-		sudo mkfs.vfat -I -F 16 /dev/$sd2
-		sudo mount /dev/$sd2 /mnt/sd
+		sudo mkfs.vfat -I -F16 /dev/$sd
+		sudo mount /dev/$sd /mnt/sd
 		sudo cp -rfv /home/pi/BCN3DSigmaLCD/* /mnt/sd/
 		sudo umount /mnt/sd > /dev/null
 	done
@@ -97,8 +97,8 @@ elif [ "$machine" = "LCD_Sigmax" ]; then
 		#Better to don't put a name on the format
 		sudo parted -s /dev/$sd2 mkpart primary fat16 1s 500Mb
 		sudo parted -s /dev/$sd2 align minimal 1
-		sudo mkfs.vfat -I -F 16 /dev/$sd2
-		sudo mount /dev/$sd2 /mnt/sd
+		sudo mkfs.vfat -I -F16 /dev/$sd
+		sudo mount /dev/$sd /mnt/sd
 		sudo cp -rfv /home/pi/BCN3DSigmaxLCD/* /mnt/sd/
 		sudo umount /mnt/sd > /dev/null
 	done
