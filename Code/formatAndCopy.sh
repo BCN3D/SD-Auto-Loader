@@ -41,7 +41,7 @@ if [ "$machine" = "Sigma" ]; then
 		sudo parted -s /dev/$sd2 rm 1 > /dev/null
 		sudo parted -s /dev/$sd2 rm 2 > /dev/null
 		sudo parted -s /dev/$sd2 mkpart primary fat32 1s 100%
-		sudo mkfs.vfat /dev/$sd -n BCN3D_Sigma
+		sudo mkfs.vfat /dev/$sd -n BCN3D_SIGMA
 		sudo mount /dev/$sd /mnt/sd
 		sudo cp -rfv /home/pi/BCN3DSigma/* /mnt/sd/
 		sudo umount /mnt/sd > /dev/null
@@ -57,7 +57,7 @@ elif [ "$machine" = "Sigmax" ]; then
 		sudo parted -s /dev/$sd2 rm 1 > /dev/null
 		sudo parted -s /dev/$sd2 rm 2 > /dev/null
 		sudo parted -s /dev/$sd2 mkpart primary fat32 1s 100%
-		sudo mkfs.vfat /dev/$sd -n BCN3D_Sigmax
+		sudo mkfs.vfat /dev/$sd -n BCN3D_SIGMAX
 		sudo mount /dev/$sd /mnt/sd
 		sudo cp -rfv /home/pi/BCN3DSigmax/* /mnt/sd/
 		sudo umount /mnt/sd > /dev/null
