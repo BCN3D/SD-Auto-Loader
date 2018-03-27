@@ -7,7 +7,7 @@
 #a load button to start the sequence. First it checks if there is internet
 #to pull updates from Github and be updated all time.
 
-#Last update 27-10-17 by A.Garcia
+#Last update 27-03-18 by A.Garcia
 
 import RPi.GPIO as GPIO
 import time
@@ -19,7 +19,7 @@ from clint.textui import colored
 
 BCN3DSigmaxLCDPath = "home/pi/BCN3DSigmaxLCD"
 BCN3DSigmaPath = "/home/pi/BCN3DSigma"
-BCN3DPlusPath = "/home/pi/BCN3DPlus"
+BCN3DPlusPath = "/home/pi/BCN3DSigmax"
 BCN3DSigmaScreenPath = "home/pi/BCN3DSigmaLCD"
 repoPath = "/home/pi/sd-auto-loader"
 codePath = "/home/pi/sd-auto-loader/Code"
@@ -200,11 +200,11 @@ def loadBCN3DSigmaScreenSD():
 		time.sleep(0.25)
 		turnOffAllLEDs()
 
-def loadBCN3DPlusSD():
+def loadBCN3DSigmaxSD():
 	os.chdir(codePath)
 	startUpLEDS(1)
 	time.sleep(2)
-	proc = sub.Popen(['./formatAndCopy.sh', 'Plus'])
+	proc = sub.Popen(['./formatAndCopy.sh', 'Sigmax'])
 	while (proc.returncode == None):
 		turnOnAllLEDs()
 		time.sleep(0.5)
@@ -270,7 +270,7 @@ def checkButtons(channel):
 			time.sleep(2)
 		if input_state_26 == True and input_state_19 == True and input_state_13 == False and input_state_6 == True:
 			print 'Loading BCN3D+ SD'
-			loadBCN3DPlusSD()
+			loadBCN3DSigmaxSD()
 			time.sleep(2)
 		if input_state_26 == True and input_state_19 == True and input_state_13 == True and input_state_6 == False:
 			print 'Loading BCN3D Sigmax Display uSD'

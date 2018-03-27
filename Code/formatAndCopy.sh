@@ -6,7 +6,7 @@
 
 #BCN3D Technologies - April 2016
 #Marc Cobler - Ostap Petrushchak
-#Last update 20-11-17 by A.Garcia
+#Last update 27-03-18 by A.Garcia
 
 #Get the arguments of the command
 #echo "$#"
@@ -41,13 +41,13 @@ if [ "$machine" = "Sigma" ]; then
 		sudo parted -s /dev/$sd2 rm 1 > /dev/null
 		sudo parted -s /dev/$sd2 rm 2 > /dev/null
 		sudo parted -s /dev/$sd2 mkpart primary fat32 1s 100%
-		sudo mkfs.vfat /dev/$sd -n BCN3D
+		sudo mkfs.vfat /dev/$sd -n BCN3D Sigma
 		sudo mount /dev/$sd /mnt/sd
 		sudo cp -rfv /home/pi/BCN3DSigma/* /mnt/sd/
 		sudo umount /mnt/sd > /dev/null
 	done
-elif [ "$machine" = "Plus" ]; then
-	echo "BCN3D Plus"
+elif [ "$machine" = "Sigmax" ]; then
+	echo "BCN3D Sigmax"
 	for sd in "${sdlist[@]}";
 	do
 		sudo rm -rf /mnt/sd/*
@@ -57,9 +57,9 @@ elif [ "$machine" = "Plus" ]; then
 		sudo parted -s /dev/$sd2 rm 1 > /dev/null
 		sudo parted -s /dev/$sd2 rm 2 > /dev/null
 		sudo parted -s /dev/$sd2 mkpart primary fat32 1s 100%
-		sudo mkfs.vfat /dev/$sd -n BCN3D
+		sudo mkfs.vfat /dev/$sd -n BCN3D Sigmax
 		sudo mount /dev/$sd /mnt/sd
-		sudo cp -rfv /home/pi/BCN3DPlus/* /mnt/sd/
+		sudo cp -rfv /home/pi/BCN3DSigmax/* /mnt/sd/
 		sudo umount /mnt/sd > /dev/null
 	done
 elif [ "$machine" = "LCD_Sigma" ]; then
